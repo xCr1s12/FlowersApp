@@ -1,4 +1,4 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+This is an Expo/React Native mobile application with NativeWind (Tailwind CSS) for styling. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
 
@@ -10,24 +10,26 @@ Expo ships breaking changes every SDK release. APIs you remember are likely rena
 
 ## Commands
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
+This project uses npm (lockfile: `package-lock.json`).
 
 ```bash
 npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
 npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
+npx expo lint               # lint (alias for eslint)
 npx expo-doctor             # diagnose dependency and config issues
 npx expo install --fix      # fix incompatible package versions
 ```
 
 Run lint and typecheck before declaring any task done.
 
-## Navigation & Routing
+## Styling with NativeWind
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
+- This project uses **NativeWind v4** with **Tailwind CSS v3** — use `className` on React Native components (View, Text, etc.).
+- Tailwind scans files listed in `tailwind.config.js` (`content` array) — new files must match those glob patterns.
+- Write class names as complete strings — avoid dynamic class name construction (e.g., `` `text-${size}` ``) since Tailwind needs static strings to detect them.
+- Use inline `style` only for runtime-calculated values.
+- Global Tailwind directives live in `global.css`, imported in `index.js` and processed via `metro.config.js`.
+- Babel preset uses `jsxImportSource: 'nativewind'` — do not remove this from `babel.config.js`.
 
 ## Building with EAS
 
@@ -37,5 +39,6 @@ Docs: https://docs.expo.dev/eas/index.md
 ## Rules
 
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
+- Web bundler is Metro (configured in `app.json` → `web.bundler`).
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md

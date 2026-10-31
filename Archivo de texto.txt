@@ -1,0 +1,7 @@
+cristobalalexisonate_db_user
+
+DbrsufnKq1URh6Cy
+
+
+
+mongodb+srv://<db_username>:<db_password>@cluster0.z3voo8v.mongodb.net/?appName=Cluster0

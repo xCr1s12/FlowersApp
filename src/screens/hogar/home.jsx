@@ -1,10 +1,23 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React from "react";
+import { ImageBackground, StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function homeScreen() {
+export default function HomeScreen() {
   return (
-    <View>
-      <Text>hola mundo</Text>
-    </View>
-  )
+    <SafeAreaView className="flex-1 bg-[#4A2F21]"  edges={["top"]}>
+      <StatusBar style="dark"  />
+      <ImageBackground
+        source={require("../../assets/fondo/Fondo.png")}
+        resizeMode="cover"
+        style={styles.Fondo}
+      />
+    </SafeAreaView>
+  );
 }
+
+const styles = StyleSheet.create({
+  Fondo: {
+    flex: 1
+  },
+});

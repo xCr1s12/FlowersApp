@@ -1,10 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
+import { StatusBar } from 'expo-status-bar';
 
-export default function inventarioScreen() {
+export default function InventarioScreen() {
   return (
-    <View>
-        <Text> Hola</Text>
-    </View>
+    <SafeAreaView> 
+      <StatusBar style="light" backgroundColor="#4A2F21" />
+
+    </SafeAreaView>
   )
+
 }

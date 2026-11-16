@@ -3,6 +3,7 @@
     "name": "FlowersApp",
     "slug": "FlowersApp",
     "version": "1.0.0",
+    "scheme": "flowersapp",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
@@ -30,7 +31,8 @@
           "style": "light"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-router"
     ]
   }
 }

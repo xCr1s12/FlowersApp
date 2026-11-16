@@ -1,11 +1,7 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  useFonts,
-  PixelifySans_600SemiBold,
-} from "@expo-google-fonts/pixelify-sans";
 
 import HomeIcon from "../../assets/iconos-svg/navegacion/hogar.svg";
 import UserIcon from "../../assets/iconos-svg/navegacion/perfil.svg";
@@ -13,69 +9,57 @@ import ChestIcon from "../../assets/iconos-svg/navegacion/inventario.svg";
 import SproutIcon from "../../assets/iconos-svg/navegacion/jardin.svg";
 import ScanIcon from "../../assets/iconos-svg/navegacion/escaner.svg";
 
-// screens
-import homeScreen from "../../screens/hogar/home";
-import inventarioScreen from "../../screens/inventario/inventario";
-import jardinScreen from "../../screens/jardin/jardin";
-import scannerScreen from "../../screens/scaner/scanner";
-import perfilScreen from "../../screens/usuario/perfil";
-
-const Tab = createBottomTabNavigator();
-
 const COLORS = {
   barBg: "#4A2F21",
-  barBorder: "#8F5F40", // franja superior clara
-  barShine: "#6E4631", // franja de brillo/transición
-  inactive: "#E8D0A0", // crema
-  activeBg: "#5DA84B", // verde
+  barBorder: "#8F5F40",
+  barShine: "#6E4631",
+  inactive: "#E8D0A0",
+  activeBg: "#5DA84B",
   activeBorder: "#2F6B2A",
   activeText: "#FFF3D6",
 };
 
 const iconos = {
-  Inventario: ChestIcon,
-  Jardin: SproutIcon,
-  hogar: HomeIcon,
-  Perfil: UserIcon,
-  Escaner: ScanIcon,
+  inventario: ChestIcon,
+  jardin: SproutIcon,
+  index: HomeIcon,
+  perfil: UserIcon,
+  escaner: ScanIcon,
 };
 
 const etiquetas = {
-  Inventario: "Inventario",
-  Jardin: "Jardín",
-  hogar: "Hogar",
-  Perfil: "Perfil",
-  Escaner: "Escáner",
+  inventario: "Inventario",
+  jardin: "Jardín",
+  index: "Hogar",
+  perfil: "Perfil",
+  escaner: "Escáner",
 };
 
-function PixelTabBar({ state, navigation }) {
+function PixelTabBar({ state, descriptors, navigation }) {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.barContainer}>
-      {/* Las dos franjas superiores */}
       <View style={styles.stripeTop} />
       <View style={styles.stripeShine} />
 
       <View
-        style={[
-          styles.bar,
-          { paddingBottom: Math.max(insets.bottom, 10) },
-        ]}
+        style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}
       >
         {state.routes.map((route, index) => {
           const focused = state.index === index;
+          const routeNavigation = descriptors[route.key].navigation;
           const Icon = iconos[route.name];
           const color = focused ? COLORS.activeText : COLORS.inactive;
-
           const onPress = () => {
-            const event = navigation.emit({
+            const event = routeNavigation?.emit?.({
               type: "tabPress",
               target: route.key,
               canPreventDefault: true,
             });
-            if (!focused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
+
+            if (!focused && !event?.defaultPrevented) {
+              routeNavigation.navigate(route.name);
             }
           };
 
@@ -89,15 +73,8 @@ function PixelTabBar({ state, navigation }) {
               style={styles.tabWrapper}
             >
               <View style={[styles.tab, focused && styles.tabActive]}>
-                <Icon
-                  width={32}
-                  height={32}
-                  opacity={focused ? 1 : 0.8}
-                />
-                <Text
-                  style={[styles.label, { color }]}
-                  numberOfLines={1}
-                >
+                <Icon width={32} height={32} opacity={focused ? 1 : 0.8} />
+                <Text style={[styles.label, { color }]} numberOfLines={1}>
                   {etiquetas[route.name]}
                 </Text>
               </View>
@@ -109,22 +86,18 @@ function PixelTabBar({ state, navigation }) {
   );
 }
 
-export default function CustomTabNavigator() {
-  const [fontsLoaded] = useFonts({ PixelifySans_600SemiBold });
-  if (!fontsLoaded) return null;
-
+export default function CustomTabsLayout() {
   return (
-    <Tab.Navigator
-      initialRouteName="hogar"
+    <Tabs
       tabBar={(props) => <PixelTabBar {...props} />}
       screenOptions={{ headerShown: false }}
     >
-      <Tab.Screen name="Inventario" component={inventarioScreen} />
-      <Tab.Screen name="Jardin" component={jardinScreen} />
-      <Tab.Screen name="hogar" component={homeScreen} />
-      <Tab.Screen name="Perfil" component={perfilScreen} />
-      <Tab.Screen name="Escaner" component={scannerScreen} />
-    </Tab.Navigator>
+      <Tabs.Screen name="inventario" options={{ title: "Inventario" }} />
+      <Tabs.Screen name="jardin" options={{ title: "Jardín" }} />
+      <Tabs.Screen name="index" options={{ title: "Hogar" }} />
+      <Tabs.Screen name="perfil" options={{ title: "Perfil" }} />
+      <Tabs.Screen name="escaner" options={{ title: "Escáner" }} />
+    </Tabs>
   );
 }
 

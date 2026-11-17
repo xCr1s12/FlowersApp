@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
@@ -12,9 +7,15 @@ import Avatar from "../../assets/iconos-svg/sprites/avatar-1.svg";
 import DivisorDecorativo from "../../assets/iconos-svg/decorativos/divisor-decorativo.svg";
 import AjustesIcon from "../../assets/iconos-svg/formularios/ajustes.svg";
 import { Colores } from "../../constants/colors";
+import { useRouter } from "expo-router";
+
+
 
 const fuentePixel = "PixelifySans_600SemiBold";
+
+
 export default function PerfilScreen() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <StatusBar style="light" backgroundColor={Colores.marronOscuro} />
@@ -44,10 +45,7 @@ export default function PerfilScreen() {
             <View style={styles.progressFill} />
           </View>
 
-          <Pressable
-            accessibilityRole="button"
-            style={styles.editButton}
-          >
+          <Pressable accessibilityRole="button" style={styles.editButton}>
             <Text style={styles.editButtonText}>EDITAR PERFIL</Text>
           </Pressable>
         </View>
@@ -63,9 +61,10 @@ export default function PerfilScreen() {
           </View>
         </View>
 
-        <Pressable
-          accessibilityRole="button"
-          style={styles.settingsRow}
+        <Pressable 
+        accessibilityRole="button" 
+        style={styles.settingsRow}
+        onPress={() => router.push("/perfil/ajustes")}
         >
           <View style={styles.settingsIconFrame}>
             <AjustesIcon width={24} height={24} />
@@ -74,6 +73,9 @@ export default function PerfilScreen() {
           <Text style={styles.chevronPlaceholder} accessibilityLabel="Abrir">
             ›
           </Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" style={styles.logout}>
+          <Text style={styles.logoutText}>Cerrar Sesión</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -207,8 +209,8 @@ const styles = StyleSheet.create({
     minHeight: 54,
   },
   statValue: {
-    color: Colores.marronOscuro,
     fontFamily: fuentePixel,
+    color: Colores.marronOscuro,
     fontSize: 13,
   },
   statLabel: {
@@ -250,5 +252,19 @@ const styles = StyleSheet.create({
     fontFamily: fuentePixel,
     fontSize: 22,
     marginLeft: "auto",
+  },
+  logout: {
+    alignItems: "center",
+    alignSelf: "stretch",
+    borderColor: Colores.aviso,
+    borderRadius: 4,
+    borderWidth: 2,
+    marginTop: 12,
+    paddingVertical: 10,
+  },
+  logoutText: {
+    color: Colores.aviso,
+    fontFamily: fuentePixel,
+    fontSize: 10,
   },
 });

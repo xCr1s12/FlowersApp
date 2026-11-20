@@ -29,7 +29,7 @@ export default function AjustesScreen() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Volver al perfil"
-          onPress={() => router.back()}
+          onPress={() => router.push("/perfil")}
           style={styles.backButton}
         >
           <Text style={styles.backArrow}>‹</Text>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   section: {
+  
     alignSelf: "stretch",
     marginTop: 14,
   },
@@ -130,12 +131,9 @@ const styles = StyleSheet.create({
     borderColor: Colores.marronOscuro,
     borderRadius: 4,
     borderWidth: 2,
-    row: {
-    overflow: "hidden",
-  },
     minHeight: 52,
-    flexDirection: "row",
-    alignItems: "center",
+    width: "100%",
+    flexDirection: "column",
     justifyContent: "space-between",
     paddingHorizontal: 14,
   },

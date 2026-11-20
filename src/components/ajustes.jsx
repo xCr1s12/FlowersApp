@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderColor: Colores.marronOscuro,
     borderRadius: 2,
     borderWidth: 2,
-    backgroundColor: Colores.superficie,
+    backgroundColor: Colores.crema,
   },
   toggleOn: {
     alignItems: "flex-end",
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colores.superficie,
   },
   linkRow: {
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
   },
   rowValue: {
     color: Colores.marronTexto,

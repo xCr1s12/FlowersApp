@@ -28,7 +28,7 @@ const iconos = {
 };
 
 const etiquetas = {
-  inventario: "Inventario",
+  inventario: "Colección",
   jardin: "Jardín",
   index: "Hogar",
   perfil: "Perfil",

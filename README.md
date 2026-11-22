@@ -1,6 +1,6 @@
 # FlowersApp
 
-FlowersApp es una aplicación móvil para explorar y organizar flores. Incluye secciones de inicio, inventario, jardín, escáner y perfil, además de pantallas de inicio de sesión y ajustes.
+FlowersApp es una aplicación móvil para regalar o recibir flores. Incluye secciones de inicio, inventario, jardín, escáner y perfil, además de pantallas de inicio de sesión y ajustes.
 
 ## Stack
 

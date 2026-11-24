@@ -1,1 +1,1 @@
-export { default } from "../screens/InicioSesion/login";
+export { default } from "../screens/Sesion/login";

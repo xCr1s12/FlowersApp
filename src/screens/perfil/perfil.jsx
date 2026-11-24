@@ -21,7 +21,6 @@ export default function PerfilScreen() {
       <StatusBar style="light" backgroundColor={Colores.marronOscuro} />
       <View style={styles.content}>
         <Text style={styles.heading}>PERFIL</Text>
-
         <DivisorDecorativo width={196} height={12} />
 
         <View style={styles.profileCard}>
@@ -74,7 +73,7 @@ export default function PerfilScreen() {
             ›
           </Text>
         </Pressable>
-        <Pressable accessibilityRole="button" style={styles.logout}>
+        <Pressable accessibilityRole="button" className="h-14" style={styles.logout}>
           <Text style={styles.logoutText}>Cerrar Sesión</Text>
         </Pressable>
       </View>
@@ -254,6 +253,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   logout: {
+    justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch",
     borderColor: Colores.aviso,

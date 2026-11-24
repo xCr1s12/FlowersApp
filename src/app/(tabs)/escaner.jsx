@@ -1,1 +1,1 @@
-export { default } from "../../screens/scaner/scanner";
+export { default } from "../../screens/escaner/scanner";

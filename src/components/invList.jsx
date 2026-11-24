@@ -23,6 +23,7 @@ export default function InvList({ data}) {
         date={item.date}
         text={item.text}
         image={item.image}
+        accent={item.accent}
       />
     ),
     [cardSize]

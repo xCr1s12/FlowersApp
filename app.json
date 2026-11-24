@@ -12,11 +12,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#F8E7C4",
         "foregroundImage": "./src/assets/android-icon-foreground.png",
         "backgroundImage": "./src/assets/android-icon-background.png",
         "monochromeImage": "./src/assets/android-icon-monochrome.png"
-      }
+      },
+      "package": "com.anonymous.FlowersApp"
     },
     "web": {
       "bundler": "metro",
@@ -32,7 +33,22 @@
         }
       ],
       "expo-font",
-      "expo-router"
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/splash-icon.png",
+          "imageWidth": 300,
+          "resizeMode": "contain",
+          "backgroundColor": "#F8E7C4",
+          "android": {
+            "image": "./src/assets/splash-icon.png",
+            "imageWidth": 300,
+            "resizeMode": "contain",
+            "backgroundColor": "#F8E7C4"
+          }
+        }
+      ]
     ]
   }
 }

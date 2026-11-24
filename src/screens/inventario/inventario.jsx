@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
@@ -34,27 +34,64 @@ const destellosGrandes = [
   { top: "95%", left: "89%" },
 ];
 
+const hoy = new Date();
+const formato = `${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
 
 const CardData = [
   {
-    id: '1',
-    title: 'Achu',
-    date: '10/8/2020',
-    text: 'Felicidades',
+    id: "1",
+    title: "Rosa",
+    date: formato,
+    text: "Felicidades",
+    favorite: false,
   },
-{
-    id: '2',
-    title: 'achu 1',
-    date: '10/8/2020',
-    text: 'Felicidades',
+  {
+    id: "2",
+    title: "Lirio",
+    date: "10/8/2020",
+    text: "Felicidades",
+    favorite: true,
+    accent: "#F4B99A",
   },
-]
+];
 
+function parsearFecha(fecha) {
+  const m =
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(fecha) ||
+    /^(\d{4})-(\d{2})-(\d{2})$/.exec(fecha);
+  if (!m) return null;
+
+  const [a, b, c] = m.slice(1).map(Number);
+  const esIso = m[1].length === 4;
+  const [ano, mes, dia] = esIso ? [a, b, c] : [c, b, a];
+
+  return new Date(ano, mes - 1, dia);
+}
+
+function esReciente(fecha, dias = 3) {
+  const f = parsearFecha(fecha);
+  if (!f) return false;
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const limite = new Date(hoy);
+  limite.setDate(hoy.getDate() - dias);
+
+  return f >= limite && f <= hoy;
+}
+
+const favorites = CardData.filter((item) => item.favorite);
 
 export default function InventarioScreen() {
   const [filtroActivo, setFiltroActivo] = useState("Todas");
-
-  return (
+  const cardsVisibles =
+    filtroActivo === "Recientes"
+      ? CardData.filter((card) => esReciente(card.date))
+      : filtroActivo === "Favoritos"
+        ? favorites
+        : CardData
+  
+        return (
     <SafeAreaView style={styles.safeArea} className="flex-1" edges={["top"]}>
       <StatusBar style="light" backgroundColor={Colores.marronOscuro} />
 
@@ -81,7 +118,9 @@ export default function InventarioScreen() {
                   key={filtro}
                   accessibilityRole="button"
                   accessibilityState={{ selected: isActive }}
-                  onPress={() => setFiltroActivo(filtro)}
+                  onPress={() => {
+                    setFiltroActivo(filtro);
+                  }}
                   style={[
                     styles.filterButton,
                     index === 0
@@ -103,7 +142,7 @@ export default function InventarioScreen() {
             })}
           </View>
         </View>
-        <InvList data={CardData} />
+        <InvList data={cardsVisibles} />
       </View>
     </SafeAreaView>
   );
@@ -161,25 +200,5 @@ const styles = StyleSheet.create({
   },
   activeFilterLabel: {
     color: Colores.superficie,
-  },
-  emptyState: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 4,
-  },
-  emptyTitle: {
-    color: Colores.marronTexto,
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 8,
-    textAlign: "center",
-  },
-  emptyDescription: {
-    color: Colores.placeholder,
-    fontSize: 12,
-    lineHeight: 18,
-    textAlign: "center",
   },
 });

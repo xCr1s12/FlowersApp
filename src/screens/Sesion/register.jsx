@@ -69,13 +69,20 @@ export default function RegisterScreen() {
       edges={["top"]}
     >
       <StatusBar style="light" backgroundColor={Colores.marronOscuro} />
+    <View 
+    style={styles.container}
+    > 
+
+    </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: Colores.fondo,
+    backgroundColor: Colores.marronOscuro,
   },
-
+  container: {
+    backgroundColor: Colores.fondo,
+  }
 });

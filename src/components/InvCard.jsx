@@ -1,7 +1,6 @@
 import React from 'react'
 import { Image, View, StyleSheet, Text } from 'react-native'
-import fuentePixel from './../constants/fonts'
-import { Colores } from '../constants/colors'
+import { Colores, EstilosTexto } from '../constants/tema'
 
 const REF_SIZE = 150
 const REF_COLOR = '#FFF7E8'   // fondo de la card
@@ -33,7 +32,7 @@ export default function Card({
 
       {/* Título o nombre del remitente */}
       <Text
-        className="text-center text-[13px] tracking-widest mt-2.5"
+        className="text-center tracking-widest mt-2.5"
         style={styles.title}
         numberOfLines={1}
       >
@@ -42,7 +41,7 @@ export default function Card({
 
       {/* Fecha */}
       <Text
-        className="text-center text-[13px] mt-2"
+        className="text-center mt-2"
         style={styles.date}
         numberOfLines={1}
       >
@@ -54,7 +53,7 @@ export default function Card({
         className="mt-2 rounded-md px-2 py-1.5 items-center justify-center"
         style={{ backgroundColor: accent }}
       >
-        <Text className="text-center text-[12px]" style={styles.text} numberOfLines={1}>
+        <Text className="text-center" style={styles.text} numberOfLines={1}>
           {text}
         </Text>
       </View>
@@ -67,15 +66,15 @@ const styles = StyleSheet.create({
     borderColor: '#4A3A2A',
   },
   title: {
-    fontFamily: fuentePixel,
+    ...EstilosTexto.cardTitulo,
     color: Colores.marronOscuro,
   },
   date: {
-    fontFamily: fuentePixel,
+    ...EstilosTexto.meta,
     color: Colores.marronOscuro,
   },
   text: {
-    fontFamily: fuentePixel,
+    ...EstilosTexto.cuerpo,
     color: Colores.marronOscuro,
   },
 })

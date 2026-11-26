@@ -5,10 +5,10 @@ import { StatusBar } from "expo-status-bar";
 
 import DestelloInventario from "../../assets/iconos-svg/inventario-y-jardin/destello-inventario-1.svg";
 import DivisorDecorativo from "../../assets/iconos-svg/decorativos/divisor-decorativo.svg";
-import { Colores } from "../../constants/colors";
+import { Colores, EstilosTexto } from "../../constants/tema";
 import InvList from "../../components/invList";
+import { getCurrentMockMemories } from "../../data/mockData";
 
-const fuentePixel = "PixelifySans_600SemiBold";
 const filtros = ["Todas", "Recientes", "Favoritos"];
 
 const destellosGrandes = [
@@ -32,27 +32,6 @@ const destellosGrandes = [
   { top: "84%", left: "22%" },
   { top: "91%", left: "58%" },
   { top: "95%", left: "89%" },
-];
-
-const hoy = new Date();
-const formato = `${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
-
-const CardData = [
-  {
-    id: "1",
-    title: "Rosa",
-    date: formato,
-    text: "Felicidades",
-    favorite: false,
-  },
-  {
-    id: "2",
-    title: "Lirio",
-    date: "10/8/2020",
-    text: "Felicidades",
-    favorite: true,
-    accent: "#F4B99A",
-  },
 ];
 
 function parsearFecha(fecha) {
@@ -80,10 +59,10 @@ function esReciente(fecha, dias = 3) {
   return f >= limite && f <= hoy;
 }
 
-const favorites = CardData.filter((item) => item.favorite);
-
 export default function InventarioScreen() {
   const [filtroActivo, setFiltroActivo] = useState("Todas");
+  const CardData = getCurrentMockMemories();
+  const favorites = CardData.filter((item) => item.favorite);
   const cardsVisibles =
     filtroActivo === "Recientes"
       ? CardData.filter((card) => esReciente(card.date))
@@ -163,9 +142,9 @@ const styles = StyleSheet.create({
     paddingTop: 27,
   },
   heading: {
+    ...EstilosTexto.tituloPantalla,
+    textTransform: "none",
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 16,
     letterSpacing: 0.4,
     marginBottom: 4,
   },
@@ -194,9 +173,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colores.verdeOscuro,
   },
   filterLabel: {
+    ...EstilosTexto.boton,
+    textTransform: "none",
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 10,
   },
   activeFilterLabel: {
     color: Colores.superficie,

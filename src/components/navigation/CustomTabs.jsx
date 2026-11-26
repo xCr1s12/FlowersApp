@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EstilosTexto } from "../../constants/tema";
 
 import HomeIcon from "../../assets/iconos-svg/navegacion/hogar.svg";
 import UserIcon from "../../assets/iconos-svg/navegacion/perfil.svg";
@@ -141,8 +142,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.activeBorder,
   },
   label: {
-    fontFamily: "PixelifySans_600SemiBold",
-    fontSize: 11,
+    ...EstilosTexto.meta,
     letterSpacing: 0.3,
   },
 });

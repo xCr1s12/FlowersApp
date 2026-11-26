@@ -6,16 +6,16 @@ import { StatusBar } from "expo-status-bar";
 import Avatar from "../../assets/iconos-svg/sprites/avatar-1.svg";
 import DivisorDecorativo from "../../assets/iconos-svg/decorativos/divisor-decorativo.svg";
 import AjustesIcon from "../../assets/iconos-svg/formularios/ajustes.svg";
-import { Colores } from "../../constants/colors";
+import { Colores, EstilosTexto, fuentePixelBold } from "../../constants/tema";
 import { useRouter } from "expo-router";
-
-
-
-const fuentePixel = "PixelifySans_600SemiBold";
+import { getCurrentMockUser, logoutMockUser } from "../../data/mockData";
 
 
 export default function PerfilScreen() {
   const router = useRouter();
+  const user = getCurrentMockUser();
+  const username = user?.username ?? "ANA";
+  const memoryCount = user?.memories.length ?? 0;
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <StatusBar style="light" backgroundColor={Colores.marronOscuro} />
@@ -31,7 +31,7 @@ export default function PerfilScreen() {
             </View>
           </View>
 
-          <Text style={styles.name}>ANA</Text>
+          <Text style={styles.name}>{username.toUpperCase()}</Text>
           <Text style={styles.description}>
             Cuidando cada recuerdo, una flor a la vez.
           </Text>
@@ -51,7 +51,7 @@ export default function PerfilScreen() {
 
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>24</Text>
+            <Text style={styles.statValue}>{memoryCount}</Text>
             <Text style={styles.statLabel}>RECUERDOS</Text>
           </View>
           <View style={styles.statCard}>
@@ -73,7 +73,15 @@ export default function PerfilScreen() {
             ›
           </Text>
         </Pressable>
-        <Pressable accessibilityRole="button" className="h-14" style={styles.logout}>
+        <Pressable
+          accessibilityRole="button"
+          className="h-14"
+          style={styles.logout}
+          onPress={() => {
+            logoutMockUser();
+            router.replace("/login");
+          }}
+        >
           <Text style={styles.logoutText}>Cerrar Sesión</Text>
         </Pressable>
       </View>
@@ -95,9 +103,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   heading: {
+    ...EstilosTexto.tituloPantalla,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 16,
     letterSpacing: 0.6,
     marginBottom: 8,
   },
@@ -135,20 +142,18 @@ const styles = StyleSheet.create({
     right: 0,
   },
   levelBadgeText: {
+    ...EstilosTexto.meta,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 9,
   },
   name: {
+    ...EstilosTexto.subtitulo,
+    textTransform: "none",
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 13,
     marginTop: 8,
   },
   description: {
+    ...EstilosTexto.cuerpo,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginTop: 8,
     textAlign: "center",
   },
@@ -159,9 +164,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   levelText: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 8,
   },
   progressTrack: {
     alignSelf: "stretch",
@@ -187,9 +191,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   editButtonText: {
+    ...EstilosTexto.boton,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 10,
   },
   statsRow: {
     alignSelf: "stretch",
@@ -208,14 +211,13 @@ const styles = StyleSheet.create({
     minHeight: 54,
   },
   statValue: {
-    fontFamily: fuentePixel,
+    ...EstilosTexto.subtitulo,
+    textTransform: "none",
     color: Colores.marronOscuro,
-    fontSize: 13,
   },
   statLabel: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 8,
     marginTop: 2,
   },
   settingsRow: {
@@ -241,14 +243,13 @@ const styles = StyleSheet.create({
     width: 34,
   },
   settingsLabel: {
+    ...EstilosTexto.boton,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 10,
     marginLeft: 10,
   },
   chevronPlaceholder: {
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
+    fontFamily: fuentePixelBold,
     fontSize: 22,
     marginLeft: "auto",
   },
@@ -263,8 +264,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   logoutText: {
+    ...EstilosTexto.boton,
+    textTransform: "none",
     color: Colores.aviso,
-    fontFamily: fuentePixel,
-    fontSize: 10,
   },
 });

@@ -1,8 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Colores } from "../constants/colors";
-
-const fuentePixel = "PixelifySans_600SemiBold";
+import { Colores, EstilosTexto, fuentePixelBold } from "../constants/tema";
 
 export default function Toggle({ label, value, onPress }) {
   return (
@@ -57,10 +55,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   rowLabel: {
+    ...EstilosTexto.cardTitulo,
     color: Colores.marronOscuro,
     flexShrink: 1,
-    fontFamily: fuentePixel,
-    fontSize: 10,
   },
   toggle: {
     width: 48,
@@ -92,15 +89,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   rowValue: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginLeft: "auto",
     marginRight: 8,
   },
   chevron: {
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
+    fontFamily: fuentePixelBold,
     fontSize: 20,
     lineHeight: 22,
   },

@@ -10,10 +10,8 @@ import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 
 import DivisorDecorativo from "../../assets/iconos-svg/decorativos/divisor-decorativo.svg";
-import { Colores } from "../../constants/colors";
+import { Colores, EstilosTexto, fuentePixelBold } from "../../constants/tema";
 import { ToggleRow, LinkRow} from "../../components/ajustes";
-
-const fuentePixel = "PixelifySans_600SemiBold";
 
 
 export default function AjustesScreen() {
@@ -66,7 +64,11 @@ export default function AjustesScreen() {
           <View style={styles.card}>
             <LinkRow label="IDIOMA" value="Español" />
             <LinkRow label="TÉRMINOS Y PRIVACIDAD" />
-            <LinkRow label="AYUDA" last />
+            <LinkRow
+              label="AYUDA"
+              last
+              onPress={() => router.push("/perfil/ayuda")}
+            />
           </View>
         </View>
 
@@ -96,20 +98,19 @@ const styles = StyleSheet.create({
   },
   backArrow: {
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
+    fontFamily: fuentePixelBold,
     fontSize: 17,
     lineHeight: 18,
   },
   backLabel: {
+    ...EstilosTexto.boton,
+    textTransform: "none",
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginLeft: 2,
   },
   heading: {
+    ...EstilosTexto.tituloPantalla,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
-    fontSize: 16,
     letterSpacing: 0.6,
     marginTop: 8,
     marginBottom: 8,
@@ -120,9 +121,9 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   sectionLabel: {
+    ...EstilosTexto.subtitulo,
+    textTransform: "none",
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginBottom: 6,
   },
   card: {
@@ -142,10 +143,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   rowLabel: {
+    ...EstilosTexto.cardTitulo,
     color: Colores.marronOscuro,
     flexShrink: 1,
-    fontFamily: fuentePixel,
-    fontSize: 10,
   },
   toggle: {
     width: 48,
@@ -177,22 +177,20 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   rowValue: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginLeft: "auto",
     marginRight: 8,
   },
   chevron: {
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
+    fontFamily: fuentePixelBold,
     fontSize: 20,
     lineHeight: 22,
   },
   version: {
+    ...EstilosTexto.meta,
     color: Colores.placeholder,
-    fontFamily: fuentePixel,
-    fontSize: 9,
     marginTop: 14,
   },
 });

@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react'
 import { View, FlatList, StyleSheet, Text } from 'react-native'
 
 import Card from './InvCard'
-import { Colores } from '../constants/colors'
+import { Colores, EstilosTexto } from '../constants/tema'
 
 const GAP = 16
 const CardMemo = memo(Card)
@@ -81,15 +81,15 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   emptyTitle: {
+    ...EstilosTexto.tituloPantalla,
+    textTransform: "none",
     color: Colores.marronTexto,
-    fontSize: 20,
-    fontWeight: "600",
     marginBottom: 8,
     textAlign: "center",
   },
   emptyDescription: {
+    ...EstilosTexto.cuerpo,
     color: Colores.placeholder,
-    fontSize: 12,
     lineHeight: 18,
     textAlign: "center",
   },

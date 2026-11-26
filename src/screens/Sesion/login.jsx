@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -11,17 +12,31 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import Ojo from "../../assets/iconos-svg/formularios/ojo.svg";
 import DivisorDecorativo from "../../assets/iconos-svg/decorativos/divisor-decorativo.svg";
-import { Colores } from "../../constants/colors";
-import fuentePixel from "../../constants/fonts";
+import { Colores, EstilosTexto } from "../../constants/tema";
+import { loginMockUser } from "../../data/mockData";
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [recordarDispositivo, setRecordarDispositivo] = useState(true);
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const iniciarSesion = () => {
+    const user = loginMockUser(nombreUsuario, contrasena);
+    if (!user) {
+      Alert.alert(
+        "No se pudo iniciar sesión",
+        "Revisa tu nombre de usuario o correo y tu contraseña.",
+      );
+      return;
+    }
+
+    router.replace("/(tabs)");
+  };
 
   return (
     <SafeAreaView
@@ -39,46 +54,46 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View
-            className="h-28 w-28 rounded-[3px] border-[1.5px]"
+            className="h-28 w-28 rounded-sm border"
             style={styles.logoFrame}
             accessibilityLabel="Logo de FlowersApp"
           />
-          <Text className="mt-2 text-[13px]" style={styles.brand}>
+          <Text className="mt-2" style={styles.brand}>
             FlowersApp
           </Text>
           <Text
-            className="mt-1.5 text-center text-[9px]" 
+            className="mt-1.5 text-center"
             style={styles.subtitle}
           >
             Inicia sesión para volver a tu jardín.
           </Text>
           <DivisorDecorativo width={170} height={10} />
 
-          <View className="mt-[22px] w-full max-w-[340px]">
-            <Text className="mb-[5px] text-[8px]" style={styles.label}>
-              NOMBRE DE USUARIO
+          <View className="mt-6 w-full max-w-xs">
+            <Text className="mb-1" style={styles.label}>
+              USUARIO O CORREO
             </Text>
             <TextInput
-              accessibilityLabel="Nombre de usuario"
+              accessibilityLabel="Nombre de usuario o correo"
               autoCapitalize="none"
               autoComplete="username"
-              placeholder="Tu nombre de usuario"
+              placeholder="Tu usuario o correo"
               placeholderTextColor={Colores.placeholder}
               returnKeyType="next"
-              className="h-[42px] rounded-[3px] border-[1.5px] px-[10px] text-[10px]"
+              className="h-11 rounded-sm border px-2.5"
               style={styles.input}
               value={nombreUsuario}
               onChangeText={setNombreUsuario}
             />
 
             <Text
-              className="mb-[5px] mt-3 text-[8px]"
+              className="mb-1 mt-3"
               style={styles.label}
             >
               CONTRASEÑA
             </Text>
             <View
-              className="h-[42px] flex-row items-center rounded-[3px] border-[1.5px]"
+              className="h-11 flex-row items-center rounded-sm border"
               style={styles.passwordInput}
             >
               <TextInput
@@ -88,7 +103,7 @@ export default function LoginScreen() {
                 placeholderTextColor={Colores.placeholder}
                 returnKeyType="done"
                 secureTextEntry={!mostrarContrasena}
-                className="h-full flex-1 px-[10px] text-[10px]"
+                className="h-full flex-1 px-2.5"
                 style={styles.passwordTextInput}
                 value={contrasena}
                 onChangeText={setContrasena}
@@ -101,7 +116,7 @@ export default function LoginScreen() {
                 accessibilityState={{ selected: mostrarContrasena }}
                 hitSlop={8}
                 onPress={() => setMostrarContrasena((visible) => !visible)}
-                className="h-full w-[38px] items-center justify-center"
+                className="h-full w-10 items-center justify-center"
               >
                 <Ojo width={18} height={18} />
               </Pressable>
@@ -113,50 +128,57 @@ export default function LoginScreen() {
               onPress={() =>
                 setRecordarDispositivo((recordar) => !recordar)
               }
-              className="min-h-[34px] flex-row items-center self-start gap-[7px]"
+              className="min-h-9 flex-row items-center self-start gap-2"
             >
               <View
                 className={
                   recordarDispositivo
-                    ? "h-[14px] w-[14px] items-center justify-center rounded-[2px] border border-[#4E7A33] bg-[#4E7A33]"
-                    : "h-[14px] w-[14px] items-center justify-center rounded-[2px] border border-[#6B4530] bg-[#FFFAF0]"
+                    ? "h-3.5 w-3.5 items-center justify-center rounded-sm border border-[#4E7A33] bg-[#4E7A33]"
+                    : "h-3.5 w-3.5 items-center justify-center rounded-sm border border-[#6B4530] bg-[#FFFAF0]"
                 }
               >
                 {recordarDispositivo ? (
                   <Text
-                    className="text-[10px] leading-3"
+                    className="text-xs leading-3"
                     style={styles.checkmark}
                   >
                     ✓
                   </Text>
                 ) : null}
               </View>
-              <Text className="text-[8px]" style={styles.rememberLabel}>
+              <Text style={styles.rememberLabel}>
                 RECORDARME EN ESTE DISPOSITIVO
               </Text>
             </Pressable>
 
             <Pressable
               accessibilityRole="button"
-              className="mt-[2px] h-11 items-center justify-center rounded-[3px] border-[1.5px] active:opacity-[0.85]"
+              className="mt-0.5 h-11 items-center justify-center rounded-sm border active:opacity-[0.85]"
               style={styles.loginButton}
+              onPress={iniciarSesion}
             >
-              <Text className="text-[10px]" style={styles.loginButtonLabel}>
+              <Text style={styles.loginButtonLabel}>
                 ENTRAR
               </Text>
             </Pressable>
 
             <View className="mt-3 items-center">
               <View className="mb-3 h-px w-2" style={styles.separatorLine} />
-              <Text
-                className="text-center text-[8px]"
-                style={styles.accountPromptText}
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Crear cuenta"
+                onPress={() => router.replace("/register")}
               >
-                ¿AÚN NO TIENES CUENTA?{" "}
-                <Text className="underline" style={styles.createAccount}>
-                  CREAR CUENTA
+                <Text
+                  className="text-center"
+                  style={styles.accountPromptText}
+                >
+                  ¿AÚN NO TIENES CUENTA?{" "}
+                  <Text className="underline" style={styles.createAccount}>
+                    CREAR CUENTA
+                  </Text>
                 </Text>
-              </Text>
+              </Pressable>
             </View>
           </View>
         </ScrollView>
@@ -181,52 +203,58 @@ const styles = StyleSheet.create({
     backgroundColor: Colores.crema,
   },
   brand: {
+    ...EstilosTexto.display,
+    textTransform: "none",
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
   },
   subtitle: {
+    ...EstilosTexto.cuerpo,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
+  },
+  demo: {
+    ...EstilosTexto.meta,
+    textTransform: "none",
+    color: Colores.marronTexto,
   },
   label: {
+    ...EstilosTexto.cardTitulo,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
   },
   input: {
+    ...EstilosTexto.cuerpo,
     borderColor: Colores.verdeOscuro,
     backgroundColor: Colores.superficie,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
   },
   passwordInput: {
     borderColor: Colores.verdeOscuro,
     backgroundColor: Colores.superficie,
   },
   passwordTextInput: {
+    ...EstilosTexto.cuerpo,
     color: Colores.marronOscuro,
-    fontFamily: fuentePixel,
   },
   checkmark: {
     color: Colores.superficie,
   },
   rememberLabel: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
   },
   loginButton: {
     borderColor: Colores.marronOscuro,
     backgroundColor: Colores.verdeOscuro,
   },
   loginButtonLabel: {
+    ...EstilosTexto.boton,
     color: Colores.superficie,
-    fontFamily: fuentePixel,
   },
   separatorLine: {
     backgroundColor: Colores.navInactivo,
   },
   accountPromptText: {
+    ...EstilosTexto.meta,
     color: Colores.marronTexto,
-    fontFamily: fuentePixel,
   },
   createAccount: {
     color: Colores.marronOscuro,
